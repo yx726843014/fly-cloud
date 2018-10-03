@@ -1,32 +1,32 @@
-package com.fly.config;
+package com.fly;
 
 import com.fly.exception.MyAccessDeniedHandler;
 import com.fly.exception.MyAuthExceptionEntryPoint;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
-
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author 游雄
  * @describe
- * @create 14:43 2018/10/2 0002
+ * @create 9:14 2018/10/3 0003
  */
-@Configuration
+@SpringBootApplication
+@EnableEurekaClient
 @EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
+public class ApiApplication extends ResourceServerConfigurerAdapter {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApiApplication.class,args);
+    }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()/*.antMatchers("/uaa/**").authenticated()*/
-                .anyRequest().authenticated()
-                .and().logout().permitAll()
-                .and().formLogin().permitAll();
+        http.csrf().disable().authorizeRequests().anyRequest().authenticated();
     }
 
     @Override

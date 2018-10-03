@@ -10,6 +10,8 @@
         <module>fly-discovery</module>
         <module>fly-core-base</module>
         <module>fly-service-oauth</module>
+        <module>fly-service-api</module>
+        <module>fly-gateway</module>
     </modules>
     <packaging>pom</packaging>
 

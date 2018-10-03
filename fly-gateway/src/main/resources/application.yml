@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: dev,basedev
+  application:
+    name: zuul
+server:
+  port: 8000
+zuul:
+  routes:
+    oauth:
+      sensitiveHeaders:
+      path: /uaa/**
+      serviceId: oauth
+
+    api:
+      sensitiveHeaders:
+      path: /api/**
+      serviceId: api-service
+  add-proxy-headers: true
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+    lease-expiration-duration-in-seconds: 2
+    lease-renewal-interval-in-seconds: 1
+  client:
+    service-url:
+      defaultZone: http://localhost:8100/eureka
+

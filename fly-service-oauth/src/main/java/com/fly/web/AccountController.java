@@ -17,14 +17,13 @@ import java.security.Principal;
  * @create 15:20 2018/10/2 0002
  */
 @RestController
-@RequestMapping("/uaa")
 public class AccountController {
 
 
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping(value = "user")
+    @RequestMapping(value = "user",produces = "application/json")
     public Object user(Principal principal){
         //Account account = accountService.findByUsername("admin");
         return Result.buildSuccess(principal);
