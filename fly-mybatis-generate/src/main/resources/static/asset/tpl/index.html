@@ -1,0 +1,204 @@
+<div ng-controller='GeneratorCtrl' class='app-ctrl'>
+    <div class='wrapper-md app-inner'>
+        <form name='form1' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 0">
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第一步：项目配置</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>项目路径</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' placeholder="导入目录地址" required='required'
+                                       ng-model='setting.projectLocation'
+                                       class='form-control'>
+                                <div class="help-block">生成代码的项目路径，配置到项目根目录即可</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>开发者</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' placeholder="youxiong" required='required'
+                                       ng-model='setting.developer'
+                                       class='form-control'>
+                                <div class="help-block">开发人员名称</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据表前缀</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' placeholder="fly_" required='required'
+                                       ng-model='setting.tablePrefix'
+                                       class='form-control'>
+                                <div class="help-block">忽略的表前缀，生成后的实体类名会忽略前缀</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 wrapper-sm text-center">
+                <button class="btn btn-primary" ng-disabled="form1.$invalid" ng-click="forward(1)">下一步</button>
+            </div>
+        </form>
+        <form name='form2' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 1">
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第二步：模块配置</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>模块包路径</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.packageName'
+                                       class='form-control'>
+                                <div class="help-block">模块Java包路径，例如：com.honvay.cola.base</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>所属子模块</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' required='required' ng-model='setting.module'
+                                       class='form-control'>
+                                <div class="help-block">代码所属子模块</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 wrapper-sm text-center">
+                <button class="btn btn-primary" ng-click="forward(0)">上一步</button>
+                <button class="btn btn-primary" ng-disabled="form2.$invalid" ng-click="forward(2)">下一步</button>
+            </div>
+        </form>
+        <form name='form3' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 2">
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第三步：填写数据库信息</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据库</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='dbType' required ng-model='setting.dbType'
+                                       class='form-control'>
+                                <div class="help-block">使用的数据库如：mysql,oracle【目前只支持Mysql数据库，如需要其他数据库请自行添加jar包】</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据库URL</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name="sqlUrl"
+                                       placeholder="jdbc:mysql://localhost:3306/fly_oauth?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull"
+                                       required ng-model='setting.sqlUrl'
+                                       class='form-control'>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据库用户名</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='username' placeholder='数据库用户名' ng-model='setting.username'
+                                       class='form-control'>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据库密码</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='password' placeholder='数据库密码'
+                                       ng-model='setting.password'
+                                       class='form-control'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 wrapper-sm text-center">
+                <button class="btn btn-primary" ng-click="forward(1)">上一步</button>
+                <button class="btn btn-primary" ng-disabled="form3.$invalid" ng-click="forward(3)">下一步</button>
+            </div>
+        </form>
+        <form name='form4' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 3">
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第四步：选择数据表</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>数据表</label>
+                            <div class='col-sm-10'>
+                                <input type='text' required ng-model='setting.tableName'
+                                       class='form-control'>
+                                <div class="help-block">数据表，例如：fly_order【使用,号可以导多个 *号全导】</div>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>选择数据表</label>
+                            <div class='col-sm-10'>
+                                <ul class='list-group m-b-none '>
+                                    <li class='list-group-item'>
+                                        <input type='text' name='title' placeholder='过滤其他表' ng-model='setting.filterName'
+                                               class='form-control'>
+                                        <div class="help-block">*当导所有的表时候过滤才会生效</div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 wrapper-sm text-center">
+                <button class="btn btn-primary" ng-click="forward(2)">上一步</button>
+                <button class="btn btn-primary" ng-disabled="form3.$invalid" ng-click="forward(4)">下一步</button>
+            </div>
+        </form>
+        <form name='form5' class='form-horizontal form-property form-validation fade-in-right' method='get'
+              style='width: 900px;margin: 0 auto;' ng-show="setup == 4">
+            <div class='col-sm-12'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading font-bold'>第五步：生成代码</div>
+                    <div class='panel-body'>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>代码包路径</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='package' readonly='readonly'
+                                       value='{{setting.packageName}}.{{setting.module}}' class='form-control'>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>实体类名</label>
+                            <div class='col-sm-10'>
+                                <input type='text' name='title' readonly='readonly'
+                                       value="{{setting.packageName}}.{{setting.module + '.entity.' + parseEnityName(setting.tableName)}}"
+                                       class='form-control'>
+                            </div>
+                        </div>
+                        <div class='line line-dashed b-b line-lg'></div>
+                        <div class='form-group'>
+                            <label class='col-sm-2 control-label'>只生成实体类</label>
+                            <div class='col-sm-10'>
+                                <label class='checkbox-inline i-switch bg-primary'>
+                                    <input type='checkbox' class='' name='onlyGenerateEntity'
+                                           ng-model='setting.onlyGenerateEntity'><i></i>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 wrapper-sm text-center">
+                <button class="btn btn-primary" ng-click="forward(3)">上一步</button>
+                <button class="btn btn-danger" ng-disabled="generating" ng-click="generate()">
+                    <span ng-show="!generating">生成代码</span>
+                    <span ng-show="generating">正在生成...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

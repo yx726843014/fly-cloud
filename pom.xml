@@ -12,6 +12,7 @@
         <module>fly-service-oauth</module>
         <module>fly-service-api</module>
         <module>fly-gateway</module>
+        <module>fly-mybatis-generate</module>
     </modules>
     <packaging>pom</packaging>
 
