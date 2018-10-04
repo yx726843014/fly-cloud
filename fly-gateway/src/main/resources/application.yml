@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev,basedev
+    active: pro,basedev
   application:
     name: zuul
 server:
@@ -17,7 +17,17 @@ zuul:
       path: /api/**
       serviceId: api-service
   add-proxy-headers: true
-
+#设置连接超时时间
 ribbon:
   ReadTimeout: 3000
   ConnectTimeout: 3000
+#endpoints可以配置一些监控信息
+endpoints:
+  logfile:
+    enabled: true
+  shutdown:
+    enabled: true
+#关闭端点身份验证
+management:
+  security:
+    enabled: false

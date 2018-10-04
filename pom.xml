@@ -13,6 +13,7 @@
         <module>fly-service-api</module>
         <module>fly-gateway</module>
         <module>fly-mybatis-generate</module>
+        <module>fly-monitor</module>
     </modules>
     <packaging>pom</packaging>
 

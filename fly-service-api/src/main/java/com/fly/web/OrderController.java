@@ -18,7 +18,7 @@ public class OrderController {
 
 
     @RequestMapping(value = "add")
-    public Object add(Principal principal){
-        return Result.buildSuccess(principal);
+    public Object add(){
+        return Result.buildSuccess("");
     }
 }

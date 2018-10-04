@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: dev,basedev
+    active: pro,basedev
   application:
     name: api-service
   jackson:
@@ -13,3 +13,17 @@ security:
       id: api-service
       user-info-uri: http://localhost:8200/user
       prefer-token-info: true
+  user:
+    name: api
+    password: api
+#在线查看日志
+endpoints:
+  logfile:
+    enabled: true
+  shutdown:
+    enabled: true
+management:
+  security:
+    enabled: false
+
+

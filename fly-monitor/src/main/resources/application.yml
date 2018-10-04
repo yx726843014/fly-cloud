@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: monitor
+  profiles:
+    active: pro
+  boot:
+    admin:
+      discovery:
+        ignored-services: monitor
+server:
+  port: 7100
+security:
+  basic:
+    enabled: false
+
