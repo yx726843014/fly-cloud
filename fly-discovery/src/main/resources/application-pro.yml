@@ -1,0 +1,12 @@
+
+eureka:
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://39.108.189.121:8100/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: 39.108.189.121
+  server:
+    enable-self-preservation: false

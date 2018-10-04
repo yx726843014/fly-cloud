@@ -26,7 +26,7 @@ public class AccountController {
     @RequestMapping(value = "user",produces = "application/json")
     public Object user(Principal principal){
         //Account account = accountService.findByUsername("admin");
-        return Result.buildSuccess(principal);
+        return principal;
     }
 
 }

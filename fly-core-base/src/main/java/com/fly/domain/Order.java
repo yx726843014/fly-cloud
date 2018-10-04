@@ -18,7 +18,9 @@ public class Order implements Serializable {
 
     private String goodsName;
 
-    private String goodsId;
+    private Integer goodsId;
+
+    private Integer accountId;
 
     private Integer num;
 }

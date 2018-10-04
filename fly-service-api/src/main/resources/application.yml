@@ -3,20 +3,13 @@ spring:
     active: dev,basedev
   application:
     name: api-service
+  jackson:
+    default-property-inclusion: non_null
 server:
   port: 8300
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8100/eureka
-  instance:
-    prefer-ip-address: true
-    hostname: localhost
-    lease-renewal-interval-in-seconds: 1
-    lease-expiration-duration-in-seconds: 2
 security:
   oauth2:
     resource:
       id: api-service
       user-info-uri: http://localhost:8200/user
-      prefer-token-info: false
+      prefer-token-info: true
