@@ -26,8 +26,8 @@ public class ApiApplication extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().authorizeRequests().antMatchers("/order/**").permitAll()
-                .anyRequest().authenticated();
+        http.csrf().disable().authorizeRequests().anyRequest().permitAll();
+               // .anyRequest().authenticated();
     }
 
     @Override

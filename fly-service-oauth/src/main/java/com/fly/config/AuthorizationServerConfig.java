@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +29,9 @@ import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+
+import java.util.Arrays;
 
 /**
  * @author 游雄
@@ -61,7 +66,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         myTokenServices.setClientDetailsService(clientService);
         myTokenServices.setAuthenticationManager(authenticationManager);
         myTokenServices.setAccessTokenEnhancer(jwtAccessTokenConverter());
+        //支持刷新token
         myTokenServices.setSupportRefreshToken(true);
+        //此处需要设置false不然刷新Token令牌 刷新后是不会被删除的
+        myTokenServices.setReuseRefreshToken(false);
+        //refresh_token需要配置
+        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper(accountService));
+        myTokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
         return myTokenServices;
     }
 

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: pro,basedev
+    active: dev,basedev
   application:
     name: api-service
   jackson:

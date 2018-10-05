@@ -29,7 +29,7 @@ import java.util.UUID;
  */
 @DynamicDataSource(type = DatabaseType.oauth)
 @Data
-public class MyTokenServices implements AuthorizationServerTokenServices, ResourceServerTokenServices, ConsumerTokenServices, InitializingBean {
+public class MyTokenServices extends DefaultTokenServices implements AuthorizationServerTokenServices, ResourceServerTokenServices, ConsumerTokenServices, InitializingBean {
     private int refreshTokenValiditySeconds = 2592000;
     private int accessTokenValiditySeconds = 43200;
     private boolean supportRefreshToken = false;
@@ -51,10 +51,11 @@ public class MyTokenServices implements AuthorizationServerTokenServices, Resour
         OAuth2AccessToken existingAccessToken = this.tokenStore.getAccessToken(authentication);
         OAuth2RefreshToken refreshToken = null;
         if (existingAccessToken != null) {
-            if (!existingAccessToken.isExpired()) {
+            //重复登录挤掉前面登录的
+            /*if (!existingAccessToken.isExpired()) {
                 this.tokenStore.storeAccessToken(existingAccessToken, authentication);
                 return existingAccessToken;
-            }
+            }*/
 
             if (existingAccessToken.getRefreshToken() != null) {
                 refreshToken = existingAccessToken.getRefreshToken();

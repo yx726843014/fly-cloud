@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: basedev,pro
+    active: basedev,dev
   application:
     name: oauth
   output:
@@ -8,8 +8,6 @@ spring:
       enabled: always
 server:
   port: 8200
-management:
-  security:
-    enabled: false
+
 
 

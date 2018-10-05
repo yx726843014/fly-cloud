@@ -2,7 +2,7 @@
   spring:
     redis:
       port: 6379
-      host: localhost
+      host: 39.108.189.121
       password:
       timeout: 2000
       jedis:
@@ -40,19 +40,19 @@
       type: com.alibaba.druid.pool.DruidDataSource
       oauth:
         driver-class-name: com.mysql.jdbc.Driver
-        password: 123
+        password: root
         username: root
-        url: jdbc:mysql://localhost:3306/fly_oauth?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
+        url: jdbc:mysql://39.108.189.121:3306/fly_oauth?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
       order:
         driver-class-name: com.mysql.jdbc.Driver
-        password: 123
+        password: root
         username: root
-        url: jdbc:mysql://localhost:3306/fly_order?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
+        url: jdbc:mysql://39.108.189.121:3306/fly_order?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
       goods:
         driver-class-name: com.mysql.jdbc.Driver
-        password: 123
+        password: root
         username: root
-        url: jdbc:mysql://localhost:3306/fly_goods?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
+        url: jdbc:mysql://39.108.189.121:3306/fly_goods?useUnicode=true&characterEncoding=UTF-8&useAffectedRows=true
     # 下面为连接池的补充设置，应用到上面所有数据源中
         # 初始化大小，最小，最大
       initialSize: 1
