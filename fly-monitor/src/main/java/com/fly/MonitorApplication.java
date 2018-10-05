@@ -57,7 +57,7 @@ public class MonitorApplication extends WebSecurityConfigurerAdapter {
                 .logout()
                 .deleteCookies("remove")
                 .logoutSuccessUrl("/login.html").permitAll()
-                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/apiapplications/").permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/applications/").permitAll()
                 .antMatchers("/health").permitAll()
                 .anyRequest().authenticated()//
                 .and().csrf().ignoringAntMatchers("/api/**", "/**").and().csrf().disable();               /* .csrfTokenRepository(csrfTokenRepository()).and()
