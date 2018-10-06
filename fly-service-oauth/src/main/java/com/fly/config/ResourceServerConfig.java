@@ -30,6 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
                 .anyRequest().authenticated()
                 .and().logout().permitAll()
                 .and().formLogin().permitAll();
+                //.and().apply();
     }
 
     @Override

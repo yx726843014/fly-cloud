@@ -7,3 +7,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://39.108.189.121:8100/eureka
+spring:
+  boot:
+    admin:
+      api-path: instances
+      url: http://localhost:7200

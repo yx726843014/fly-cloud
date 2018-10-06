@@ -1,0 +1,22 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: new-monitor
+  security:
+    user:
+      name: admin
+      password: admin
+
+server:
+  port: 7200
+management:
+  endpoints:
+    web:
+      exposure:
+        exclude: "*"
+      #base-path: /
+  endpoint:
+    health:
+      show-details: always
+

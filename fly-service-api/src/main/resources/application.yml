@@ -3,10 +3,12 @@ spring:
     active: dev,basedev
   application:
     name: api-service
+  #json null值关闭
   jackson:
     default-property-inclusion: non_null
 server:
   port: 8300
+#oauth配置认证服务器地址
 security:
   oauth2:
     resource:
@@ -22,8 +24,9 @@ endpoints:
     enabled: true
   shutdown:
     enabled: true
-management:
-  security:
-    enabled: false
+#关闭spring boot admin权限认证
+#management:
+  #security:
+    #enabled: false
 
 

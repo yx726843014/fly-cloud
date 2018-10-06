@@ -10,3 +10,13 @@ eureka:
     hostname: localhost
   server:
     enable-self-preservation: false
+spring:
+  boot:
+    admin:
+      url: http://localhost:7200
+      api-path: instances
+      #username: admin
+      #password: admin
+management:
+  security:
+    enabled: false

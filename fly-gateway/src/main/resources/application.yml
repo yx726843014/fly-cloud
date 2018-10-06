@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: pro,basedev
+    active: dev,basepro
   application:
     name: zuul
 server:
@@ -28,6 +28,6 @@ endpoints:
   shutdown:
     enabled: true
 #关闭端点身份验证
-management:
-  security:
-    enabled: false
+#management:
+  #security:
+    #enabled: false
