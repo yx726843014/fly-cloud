@@ -18,4 +18,6 @@ public class Account {
 
     private String role;
 
+    private String mobile;
+
 }

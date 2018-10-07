@@ -4,14 +4,19 @@ import com.fly.exception.WebResponseExceptionTranslator;
 import com.fly.service.AccountService;
 import com.fly.service.ClientService;
 import com.fly.service.impl.MyTokenServices;
+import com.fly.sms.SMSAbstractAuthenticationToken;
+import com.fly.sms.SMSAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -57,6 +62,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private WebResponseExceptionTranslator webResponseExceptionTranslator;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
 
     @Bean
     @Primary
@@ -73,7 +81,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //refresh_token需要配置
         PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(new UserDetailsByNameServiceWrapper(accountService));
-        myTokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        SMSAuthenticationProvider smsAuthenticationProvider = new SMSAuthenticationProvider(accountService,stringRedisTemplate);
+        myTokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider,smsAuthenticationProvider,daoAuthenticationProvider)));
         return myTokenServices;
     }
 

@@ -2,6 +2,10 @@ package com.fly.config;
 
 import com.fly.exception.MyAccessDeniedHandler;
 import com.fly.exception.MyAuthExceptionEntryPoint;
+import com.fly.filter.ValidateCodeFilter;
+import com.fly.sms.SMSSecurityConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +13,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,16 +27,30 @@ import javax.servlet.http.HttpServletResponse;
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private SMSSecurityConfigurer smsSecurityConfigurer;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.addFilterBefore(validateCodeFilter(), UsernamePasswordAuthenticationFilter.class).csrf().disable()
                 .authorizeRequests()/*.antMatchers("/uaa/**").authenticated()*/
                 .and().authorizeRequests().antMatchers(HttpMethod.POST, "/api/applications/**").permitAll()
                 .antMatchers("/health/**").permitAll()
+                .antMatchers("/validateCode/**").permitAll()
+                .antMatchers("/smsCode/**").permitAll()
                 .anyRequest().authenticated()
                 .and().logout().permitAll()
-                .and().formLogin().permitAll();
-                //.and().apply();
+                .and().formLogin().permitAll()
+                .and().apply(smsSecurityConfigurer);
+    }
+
+    @Bean
+    public ValidateCodeFilter validateCodeFilter(){
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter(authenticationFailureHandler);
+        return validateCodeFilter;
     }
 
     @Override

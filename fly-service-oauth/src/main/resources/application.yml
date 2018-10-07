@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: basedev,dev
+    active: basedev,pro
   application:
     name: oauth
   output:

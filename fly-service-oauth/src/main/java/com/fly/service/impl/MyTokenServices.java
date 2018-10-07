@@ -2,9 +2,11 @@ package com.fly.service.impl;
 
 import com.fly.annotation.DynamicDataSource;
 import com.fly.config.ds.DatabaseType;
+import com.fly.sms.SMSAbstractAuthenticationToken;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.*;
@@ -97,7 +99,14 @@ public class MyTokenServices extends DefaultTokenServices implements Authorizati
             } else {
                 OAuth2Authentication authentication = this.tokenStore.readAuthenticationForRefreshToken(refreshToken);
                 if (this.authenticationManager != null && !authentication.isClientOnly()) {
+                    //String grantType = tokenRequest.getGrantType();
                     Authentication user = new PreAuthenticatedAuthenticationToken(authentication.getUserAuthentication(), "", authentication.getAuthorities());
+                   /* OAuth2Request oAuth2Request = authentication.getOAuth2Request();
+                    if(oAuth2Request.getGrantType().equals("password")){
+                        user = new UsernamePasswordAuthenticationToken(authentication.getUserAuthentication(),"",authentication.getAuthorities());
+                    }else if(oAuth2Request.getGrantType().equals("mobile")){
+                        user = new SMSAbstractAuthenticationToken(authentication.getUserAuthentication(),"",authentication.getAuthorities());
+                    }*/
                     user = this.authenticationManager.authenticate(user);
                     Object details = authentication.getDetails();
                     authentication = new OAuth2Authentication(authentication.getOAuth2Request(), user);

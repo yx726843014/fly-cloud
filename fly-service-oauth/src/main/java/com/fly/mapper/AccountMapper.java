@@ -14,4 +14,7 @@ public interface AccountMapper {
 
     @Select("select * from fly_account where username = #{username}")
     Account findByUsername(String username);
+
+    @Select("select * from fly_account where mobile = #{mobile}")
+    Account findByMobile(String mobile);
 }
